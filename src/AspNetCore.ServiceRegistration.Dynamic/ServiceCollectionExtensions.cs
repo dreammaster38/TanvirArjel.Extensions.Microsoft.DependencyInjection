@@ -193,12 +193,14 @@ namespace AspNetCore.ServiceRegistration.Dynamic
 
             List<string> assembliesToBeLoaded = new List<string>();
 
+            string ddlsDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
             if (scanAssembliesStartsWith != null && scanAssembliesStartsWith.Any())
             {
                 if (scanAssembliesStartsWith.Length == 1)
                 {
                     string searchPattern = $"{scanAssembliesStartsWith.First()}*.dll";
-                    string[] assemblyPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, searchPattern);
+                    string[] assemblyPaths = Directory.GetFiles(ddlsDirectory, searchPattern);
                     assembliesToBeLoaded.AddRange(assemblyPaths);
                 }
 
@@ -207,14 +209,14 @@ namespace AspNetCore.ServiceRegistration.Dynamic
                     foreach (string starsWith in scanAssembliesStartsWith)
                     {
                         string searchPattern = $"{starsWith}*.dll";
-                        string[] assemblyPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, searchPattern);
+                        string[] assemblyPaths = Directory.GetFiles(ddlsDirectory, searchPattern);
                         assembliesToBeLoaded.AddRange(assemblyPaths);
                     }
                 }
             }
             else
             {
-                string[] assemblyPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll");
+                string[] assemblyPaths = Directory.GetFiles(ddlsDirectory, "*.dll");
                 assembliesToBeLoaded.AddRange(assemblyPaths);
             }
 
